@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -49,10 +50,10 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("GET", "/eventi/**").permitAll()
-                        .requestMatchers("POST", "/eventi/**").hasRole("ORGANIZER")
-                        .requestMatchers("PUT", "/eventi/**").hasRole("ORGANIZER")
-                        .requestMatchers("DELETE", "/eventi/**").hasRole("ORGANIZER")
+                        .requestMatchers(HttpMethod.GET, "/eventi/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/eventi/**").hasRole("ORGANIZER")
+                        .requestMatchers(HttpMethod.PUT, "/eventi/**").hasRole("ORGANIZER")
+                        .requestMatchers(HttpMethod.DELETE, "/eventi/**").hasRole("ORGANIZER")
                         .requestMatchers("/prenotazioni/**").hasAnyRole("USER", "ORGANIZER")
                         .anyRequest().authenticated()
                 )
