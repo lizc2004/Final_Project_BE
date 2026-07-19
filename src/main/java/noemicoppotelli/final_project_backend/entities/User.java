@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -36,9 +38,11 @@ public class User implements UserDetails {
     private Ruolo ruolo;
 
     @OneToMany(mappedBy = "creatore")
+    @JsonIgnore
     private List<Event> eventiCreati;
 
     @OneToMany(mappedBy = "utente")
+    @JsonIgnore
     private List<Reservation> prenotazioni;
 
     public enum Ruolo {
