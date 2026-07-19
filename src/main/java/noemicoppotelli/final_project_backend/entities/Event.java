@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,5 +43,6 @@ public class Event {
     private User creatore;
 
     @OneToMany(mappedBy = "evento")
+    @JsonIgnore
     private List<Reservation> prenotazioni;
 }
