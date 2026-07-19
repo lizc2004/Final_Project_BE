@@ -52,11 +52,19 @@ public class EventService {
         Event event = findById(id);
         checkOwnership(event, utenteCorrente);
 
+        int differenzaPosti = request.postiTotali() - event.getPostiTotali();
+        int nuoviPostiDisponibili = event.getPostiDisponibili() + differenzaPosti;
+
+        if (nuoviPostiDisponibili < 0) {
+            throw new BadRequestException("Impossibile ridurre i posti totali sotto il numero di posti già prenotati");
+        }
+
         event.setTitolo(request.titolo());
         event.setDescrizione(request.descrizione());
         event.setData(request.data());
         event.setLuogo(request.luogo());
         event.setPostiTotali(request.postiTotali());
+        event.setPostiDisponibili(nuoviPostiDisponibili);
 
         return eventRepository.save(event);
     }
